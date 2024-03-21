@@ -1,0 +1,381 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Get All events between time periods",
+        "description": "Get All events between time periods",
+        "contact": {
+            "email": "vaisakhkolathara@gmail.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/events/{userId}": {
+            "get": {
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Get events by user ID",
+                "description": "Returns events for the specified user ID within the specified date range.",
+                "operationId": "getEventsByUserId",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "ID of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "description": "Start date of the range (eg: 'Mon 10')",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "description": "End date of the range (eg: 'Tue 11')",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EventResponseSchema"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No events found"
+                    }
+                }
+            }
+        },
+        "/upload/": {
+            "post": {
+                "tags": [
+                    "Upload"
+                ],
+                "summary": "Upload the schedule for a crew member",
+                "description": "Upload the schedule for a crew member.",
+                "operationId": "uploadCrewDTRForUser",
+                "requestBody": {
+                    "description": "File to upload",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "file"
+                                ],
+                                "properties": {
+                                    "file": {
+                                        "description": "File to upload",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UploadResponseSchema"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No file uploaded"
+                    }
+                }
+            }
+        },
+        "/flights-next-week/{userId}": {
+            "get": {
+                "tags": [
+                    "Flights"
+                ],
+                "summary": "Get flights by user ID",
+                "description": "Returns flights for the specified user ID for next week.",
+                "operationId": "getFlightsForNextWeekForUser",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "ID of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EventResponseSchema"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No flights found"
+                    }
+                }
+            }
+        },
+        "/flights-from/{userId}/{location}": {
+            "get": {
+                "tags": [
+                    "Flights"
+                ],
+                "summary": "Get flights from a specific location for a user",
+                "description": "Returns flights from a specific location for the specified user ID.",
+                "operationId": "getFlightsFromGivenLocation",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "ID of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "location",
+                        "in": "path",
+                        "description": "IATA code",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EventResponseSchema"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No flights found"
+                    }
+                }
+            }
+        },
+        "/standbys/{userId}": {
+            "get": {
+                "tags": [
+                    "StandBy"
+                ],
+                "summary": "Get stand by days by user ID for next week",
+                "description": "Returns stand by days for the specified user ID for next week.",
+                "operationId": "getStandBysForNextWeekForUser",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "ID of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/EventResponseSchema"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No flights found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "EventResponseSchema": {
+                "title": "API Response",
+                "description": "Encapsulating API response object",
+                "properties": {
+                    "status": {
+                        "description": "Status of the response (eg: 'success')",
+                        "type": "string"
+                    },
+                    "code": {
+                        "description": "HTTP status code (eg: 200)",
+                        "type": "integer"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/EventSchema"
+                        }
+                    },
+                    "message": {
+                        "description": "Additional message (optional)",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "EventSchema": {
+                "title": "Event",
+                "description": "Event object",
+                "properties": {
+                    "date": {
+                        "description": "Date of the event (eg: 'Sat 15')",
+                        "type": "string"
+                    },
+                    "checkin": {
+                        "description": "Check-in time (eg: '0500')",
+                        "type": "string"
+                    },
+                    "checkout": {
+                        "description": "Check-out time (nullable)",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "code": {
+                        "description": "Event code",
+                        "type": "string"
+                    },
+                    "activity": {
+                        "description": "Activity description (nullable)",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "remark": {
+                        "description": "Remark (nullable)",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "from": {
+                        "description": "From location (nullable)",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "std": {
+                        "description": "STD (nullable)",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "to": {
+                        "description": "To location (nullable)",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "sta": {
+                        "description": "STA (nullable)",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "hotel": {
+                        "description": "Hotel information (nullable)",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "blh": {
+                        "description": "BLH (nullable)",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "flight_time": {
+                        "description": "Flight time (nullable)",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "duration": {
+                        "description": "Duration (nullable)",
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "description": "Creation date (eg: '2024-03-20')",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "UploadResponseSchema": {
+                "title": "UploadResponse",
+                "description": "UploadResponse object",
+                "properties": {
+                    "status": {
+                        "description": "Status of the response",
+                        "type": "string",
+                        "example": "success"
+                    },
+                    "code": {
+                        "description": "HTTP status code",
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "data": {
+                        "description": "Data object containing the uploaded filename,count and user_id",
+                        "properties": {
+                            "count_of_events": {
+                                "description": "Count of events uploaded",
+                                "type": "number"
+                            },
+                            "user_id": {
+                                "description": "Id of the new/existing user",
+                                "type": "string"
+                            },
+                            "filename": {
+                                "description": "Name of the uploaded file",
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "message": {
+                        "description": "Additional message",
+                        "type": "string",
+                        "example": "File uploaded successfully"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}

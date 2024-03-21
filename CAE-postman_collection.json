@@ -1,0 +1,131 @@
+{
+	"info": {
+		"_postman_id": "807ef999-ace3-42c7-8d29-b52666fe9f88",
+		"name": "CAE-challenge-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24481837"
+	},
+	"item": [
+		{
+			"name": "Upload the roster",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/vparannattilcherul/Downloads/CAE Laravel Assignment/Roster - CrewConnex.html"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:8000/api/upload",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Events between two dates",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/events/1/?from='Mon 15'&to='Tue 16'",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"events",
+						"1",
+						""
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "'Mon 15'"
+						},
+						{
+							"key": "to",
+							"value": "'Tue 16'"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all flights scheduled for next week",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/flights-next-week/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"flights-next-week",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all standbys for next week",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/standbys/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"standbys",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all flights from one location",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8000/api/flights-from/1/KRP",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"flights-from",
+						"1",
+						"KRP"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
